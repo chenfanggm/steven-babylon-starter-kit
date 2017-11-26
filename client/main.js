@@ -1,16 +1,15 @@
 import './styles/main.scss'
-import * as BABYLON from 'babylonjs'
-import { createScene } from './components/scene'
+import AveragePath from './games/AveragePath'
+import config from '../config'
+
 
 const canvas = document.getElementById('mainCanvas')
-const engine = new BABYLON.Engine(canvas, true)
-console.log(engine)
-const scene = createScene(engine, canvas)
+const game = new AveragePath({ canvas })
+game.start()
 
-engine.runRenderLoop(function() {
-  scene.render()
-})
-
-window.addEventListener('resize', () => {
-  engine.resize()
-})
+// Hot module replace setting
+if (config.env === 'development') {
+  if (module.hot) {
+    module.hot.accept()
+  }
+}
